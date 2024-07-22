@@ -1,0 +1,100 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   main.cpp                                           :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: cdalla-s <cdalla-s@student.codam.nl>         +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2023/07/21 12:18:51 by cdalla-s      #+#    #+#                 */
+/*   Updated: 2023/07/24 10:55:00 by cdalla-s      ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
+
+// #include "ClapTrap.hpp"
+#include "ScavTrap.hpp"
+#include "FragTrap.hpp"
+#include <iostream>
+
+int main (void)
+{
+	ClapTrap jonny("Jonny");
+	ClapTrap bonny("Bonny");
+	ScavTrap holly("Holly");
+	FragTrap ernesto("Ernesto");
+
+	std::cout << "\n";
+	std::cout << jonny.getName() << " has " << jonny.getHitPoints() << " health and " << jonny.getEnergy() << " energy points." << std::endl;
+	std::cout << bonny.getName() << " has " << bonny.getHitPoints() << " health and " << bonny.getEnergy() << " energy points." << std::endl;
+	std::cout << holly.getName() << " has " << holly.getHitPoints() << " health and " << holly.getEnergy() << " energy points." << std::endl;
+	std::cout << ernesto.getName() << " has " << ernesto.getHitPoints() << " health and " << ernesto.getEnergy() << " energy points." << std::endl;
+	std::cout << "\n";
+
+	while (jonny.getEnergy() >= 0)
+	{
+		if (holly.getHitPoints() == 1)
+			holly.beRepaired(2);
+		if (holly.getHitPoints() <= 0)
+		{
+			std::cout  << "Poor Holly, he is dead" << std::endl;
+			break ; 
+		}
+		if (jonny.getEnergy() == 0)
+		{
+			std::cout << "Jonny has no more energy to attack" << std::endl;
+			break ;
+		}
+		jonny.attack("Bonny");
+		holly.takeDamage(jonny.getAttackDamage());
+		std::cout << "\n";
+	}
+	
+	std::cout << "\n";
+	holly.guardGate();
+	std::cout << "\n";
+	
+	while (holly.getEnergy() >= 0)
+	{
+		if (bonny.getHitPoints() == 1)
+			bonny.beRepaired(2);
+		if (bonny.getHitPoints() <= 0)
+		{
+			std::cout  << "Poor Bonny, he is dead" << std::endl;
+			break ; 
+		}
+		if (holly.getEnergy() == 0)
+		{
+			std::cout << "Holly has no more energy to attack" << std::endl;
+			break ;
+		}
+		holly.attack("Bonny");
+		bonny.takeDamage(holly.getAttackDamage());
+		std::cout << "\n";
+	}
+
+	std::cout << "\n";
+
+	while (ernesto.getEnergy() >= 0)
+	{
+		if (holly.getHitPoints() == 10)
+			holly.beRepaired(20);
+		if (holly.getHitPoints() <= 0)
+		{
+			std::cout  << "Poor Holly, he is dead" << std::endl;
+			break ;
+		}
+		if (ernesto.getEnergy() == 0)
+		{
+			std::cout << "Ernesto has no more energy to attack" << std::endl;
+			break ;
+		}
+		ernesto.attack("Holly");
+		holly.takeDamage(ernesto.getAttackDamage());
+		std::cout << "\n";
+	}
+
+	std::cout << "\n";
+	ernesto.highFivesGuys();
+	std::cout << "\n";
+	
+	return (0);
+}
